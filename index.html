@@ -51,38 +51,22 @@
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
         }
-        .status-bar {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-        .stat {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-        .stat-label { font-size: 0.7rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; }
+        .status-bar { display: flex; gap: 30px; align-items: center; }
+        .stat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .stat-label { font-size: 0.9rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; }
         .stat-value { font-family: 'Black Han Sans', sans-serif; font-size: 1.6rem; }
         #timer-val { color: var(--red); }
         #score-val { color: var(--gold); }
         #combo-val { color: var(--green); }
 
-        /* 타이머 바 */
         .timer-bar-wrap {
-            flex: 1;
-            max-width: 300px;
-            height: 8px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-            overflow: hidden;
+            flex: 1; max-width: 300px; height: 8px;
+            background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;
         }
         #timer-bar {
-            height: 100%;
-            width: 100%;
+            height: 100%; width: 100%;
             background: linear-gradient(to right, var(--green), var(--gold), var(--red));
-            border-radius: 4px;
-            transition: width 1s linear;
+            border-radius: 4px; transition: width 1s linear;
         }
 
         /* ── 게임 영역 ── */
@@ -90,28 +74,23 @@
             flex: 1;
             display: grid;
             grid-template-columns: 1fr 2fr 1fr;
-            grid-template-rows: 1fr auto 1fr;
             gap: 20px;
             padding: 30px 60px;
             align-items: center;
         }
 
-        /* 캐릭터 */
+        /* 좌우 캐릭터 패널 */
         .character {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .char-avatar {
-            width: 130px;
-            height: 130px;
+            width: 130px; height: 130px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-size: 3.5rem;
-            position: relative;
             transition: transform 0.15s;
         }
         .char-left .char-avatar {
@@ -124,41 +103,50 @@
             border: 3px solid rgba(255,45,85,0.4);
             box-shadow: 0 0 30px rgba(255,45,85,0.2), inset 0 0 20px rgba(255,45,85,0.1);
         }
-        .char-name {
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 1.2rem;
-            text-align: center;
-        }
-        .char-left .char-name { color: var(--blue); }
-        .char-right .char-name { color: var(--red); }
-        .char-hint {
-            font-size: 0.72rem;
-            color: rgba(255,255,255,0.45);
-            text-align: center;
-            line-height: 1.5;
-            background: rgba(255,255,255,0.05);
-            padding: 6px 12px;
-            border-radius: 8px;
+        /* 정답 시 아바타 튀기기 */
+        .char-avatar.pop-left  { animation: avatarPop 0.25s ease-out; }
+        .char-avatar.pop-right { animation: avatarPop 0.25s ease-out; }
+        @keyframes avatarPop {
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.18); }
+            100% { transform: scale(1); }
         }
 
-        /* 중앙 문제 */
+        .char-name { font-family: 'Black Han Sans', sans-serif; font-size: 1.2rem; text-align: center; }
+        .char-left  .char-name { color: var(--blue); }
+        .char-right .char-name { color: var(--red); }
+
+        .char-rules {
+            font-size: 0.92rem;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            line-height: 1.8;
+            background: rgba(255,255,255,0.05);
+            padding: 10px 14px;
+            border-radius: 10px;
+            width: 100%;
+        }
+        .char-rules strong { display: block; font-size: 0.85rem; letter-spacing: 1px; opacity: 0.6; margin-bottom: 4px; }
+        .char-left  .char-rules { border-left: 3px solid rgba(0,194,255,0.5); }
+        .char-right .char-rules { border-left: 3px solid rgba(255,45,85,0.5); }
+
+        /* ── 중앙 영역 ── */
         .center-area {
-            grid-column: 2;
-            grid-row: 1 / 4;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 28px;
+            gap: 24px;
         }
 
+        /* 문제 카드 */
         .question-card {
             width: 100%;
             background: white;
             color: #1a1a2e;
             border-radius: 20px;
-            padding: 36px 40px;
-            min-height: 140px;
+            padding: 32px 36px;
+            min-height: 160px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -166,69 +154,91 @@
             text-align: center;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             border: 3px solid transparent;
-            transition: border-color 0.15s, background 0.15s, transform 0.1s;
+            transition: border-color 0.15s, background 0.15s;
             position: relative;
         }
-        .question-card.correct {
-            border-color: var(--blue);
-            box-shadow: 0 0 40px rgba(0,194,255,0.4);
-        }
-        .question-card.wrong {
-            background: #ffe0e0;
-            border-color: var(--red);
+        .question-card.correct { border-color: var(--blue); box-shadow: 0 0 40px rgba(0,194,255,0.4); }
+        .question-card.wrong   { background: #ffe0e0; border-color: var(--red); }
+
+        .q-label {
+            font-size: 0.88rem; font-weight: 700; color: #bbb;
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px;
         }
 
-        .q-num {
-            font-size: 0.75rem;
+        /* 거래 문장 — 강조 계정과목 포함 */
+        .q-sentence {
+            font-size: 1.35rem;
             font-weight: 700;
-            color: #999;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-        .q-text {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #1a1a2e;
+            color: #2a2a3e;
+            line-height: 1.6;
             word-break: keep-all;
-            line-height: 1.4;
-        }
-        .q-hint {
-            font-size: 0.8rem;
-            color: #777;
-            margin-top: 10px;
-            font-style: italic;
         }
 
-        /* 답변 버튼 */
-        .answer-buttons {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-        }
-        .ans-btn {
-            flex: 1;
-            padding: 22px 10px;
-            border: none;
-            border-radius: 16px;
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 1.4rem;
-            color: white;
-            cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
+        /* ★ 강조 계정과목 — 이게 핵심 */
+        .target-account {
+            display: inline-block;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: #fff;
+            background: linear-gradient(135deg, #1a1aff, #7700ff);
+            padding: 2px 14px 4px;
+            border-radius: 8px;
+            margin: 0 3px;
+            box-shadow: 0 3px 12px rgba(100,0,255,0.45);
             position: relative;
-            overflow: hidden;
+            letter-spacing: -0.3px;
+        }
+        /* 깜빡이는 화살표 */
+        .target-account::after {
+            content: '▼';
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.88rem;
+            color: #9966ff;
+            animation: arrowBlink 0.9s ease-in-out infinite;
+        }
+        @keyframes arrowBlink {
+            0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            50%       { opacity: 0.3; transform: translateX(-50%) translateY(3px); }
+        }
+
+        /* 문제 하단: 어느 쪽에 기입? 안내 */
+        .q-ask {
+            margin-top: 22px;
+            font-size: 0.85rem;
+            color: #888;
+            background: rgba(0,0,0,0.06);
+            padding: 5px 16px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        .q-ask b { color: #555; }
+
+        /* 오답 시 힌트 */
+        .q-hint {
+            margin-top: 8px;
+            font-size: 1rem;
+            color: #c0392b;
+            font-weight: 700;
+        }
+
+        /* ── 답변 버튼 ── */
+        .answer-buttons { display: flex; gap: 20px; width: 100%; }
+        .ans-btn {
+            flex: 1; padding: 22px 10px;
+            border: none; border-radius: 16px;
+            font-family: 'Black Han Sans', sans-serif; font-size: 1.4rem;
+            color: white; cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            position: relative; overflow: hidden;
         }
         .ans-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(255,255,255,0.15);
-            opacity: 0;
-            transition: opacity 0.2s;
+            content: ''; position: absolute; inset: 0;
+            background: rgba(255,255,255,0.15); opacity: 0; transition: opacity 0.2s;
         }
         .ans-btn:hover::before { opacity: 1; }
-        .ans-btn:active { transform: translateY(4px); }
         .ans-btn-left {
             background: linear-gradient(135deg, #00aaff, #0055ff);
             box-shadow: 0 6px 0 #0033aa, 0 10px 30px rgba(0,100,255,0.4);
@@ -237,290 +247,187 @@
             background: linear-gradient(135deg, #ff2d55, #ff00aa);
             box-shadow: 0 6px 0 #aa0033, 0 10px 30px rgba(255,0,80,0.4);
         }
-        .ans-btn:active { box-shadow: none !important; }
+        .ans-btn:active { transform: translateY(4px); box-shadow: none !important; }
         .ans-sub {
-            display: block;
-            font-size: 0.7rem;
-            font-family: 'Noto Sans KR', sans-serif;
-            font-weight: 400;
-            opacity: 0.8;
-            margin-top: 4px;
+            display: block; font-size: 0.85rem;
+            font-family: 'Noto Sans KR', sans-serif; font-weight: 400; opacity: 0.85; margin-top: 4px;
         }
 
-        /* 키보드 힌트 */
-        .key-hint {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-        }
+        /* 키 힌트 */
+        .key-hint { display: flex; justify-content: center; gap: 30px; }
         .kbd {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.3);
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 0.9rem; color: rgba(255,255,255,0.3);
         }
         .kbd span {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 5px;
-            padding: 2px 8px;
-            font-family: monospace;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 5px; padding: 2px 8px; font-family: monospace;
         }
 
-        /* 콤보 애니메이션 */
+        /* ── 팝업 ── */
         .combo-popup {
-            position: fixed;
-            top: 30%;
-            left: 50%;
+            position: fixed; top: 30%; left: 50%;
             transform: translate(-50%, -50%);
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 3.5rem;
-            color: var(--gold);
-            text-shadow: 0 0 20px rgba(255,214,0,0.8), 2px 2px 0 #000;
-            pointer-events: none;
-            z-index: 50;
+            font-family: 'Black Han Sans', sans-serif; font-size: 3.5rem;
+            color: var(--gold); text-shadow: 0 0 20px rgba(255,214,0,0.8), 2px 2px 0 #000;
+            pointer-events: none; z-index: 50; display: none;
             animation: comboPop 0.7s ease-out forwards;
-            display: none;
         }
         @keyframes comboPop {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-            40% { opacity: 1; transform: translate(-50%, -70%) scale(1.3); }
-            100% { opacity: 0; transform: translate(-50%, -120%) scale(1); }
+            0%   { opacity: 0; transform: translate(-50%,-50%) scale(0.5); }
+            40%  { opacity: 1; transform: translate(-50%,-70%) scale(1.3); }
+            100% { opacity: 0; transform: translate(-50%,-120%) scale(1); }
         }
-
-        /* 정답/오답 팝업 */
         .feedback-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
+            position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 2rem;
-            padding: 16px 40px;
-            border-radius: 50px;
-            pointer-events: none;
-            z-index: 50;
-            display: none;
+            font-family: 'Black Han Sans', sans-serif; font-size: 2rem;
+            padding: 16px 40px; border-radius: 50px;
+            pointer-events: none; z-index: 50; display: none;
         }
-        .feedback-popup.ok {
-            background: rgba(0,194,255,0.9);
-            color: white;
-            animation: feedPop 0.4s ease-out forwards;
-        }
-        .feedback-popup.no {
-            background: rgba(255,45,85,0.9);
-            color: white;
-            animation: feedPop 0.4s ease-out forwards;
-        }
+        .feedback-popup.ok { background: rgba(0,194,255,0.9); color: white; animation: feedPop 0.4s ease-out forwards; }
+        .feedback-popup.no { background: rgba(255,45,85,0.9);  color: white; animation: feedPop 0.4s ease-out forwards; }
         @keyframes feedPop {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+            0%   { opacity: 0; transform: translate(-50%,-50%) scale(0.6); }
+            50%  { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
+            100% { opacity: 0; transform: translate(-50%,-50%) scale(1); }
         }
 
-        /* ── 오버레이 공통 ── */
+        /* ── 오버레이 ── */
         .overlay {
-            position: fixed;
-            inset: 0;
+            position: fixed; inset: 0;
             background: rgba(10,10,20,0.92);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-            backdrop-filter: blur(16px);
-            gap: 16px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            z-index: 200; backdrop-filter: blur(16px); gap: 16px;
         }
         .overlay-title {
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 3rem;
+            font-family: 'Black Han Sans', sans-serif; font-size: 3rem;
             background: linear-gradient(to right, var(--blue), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .overlay-sub { font-size: 1rem; color: rgba(255,255,255,0.5); }
 
-        /* 시작 화면 */
         .start-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin: 10px 0 20px;
-            width: 560px;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 14px; margin: 10px 0 20px; width: 580px;
         }
         .info-card {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px 20px;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.7);
-            line-height: 1.7;
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: 14px; padding: 16px 20px;
+            font-size: 1rem; color: rgba(255,255,255,0.7); line-height: 1.75;
         }
-        .info-card strong { color: white; display: block; margin-bottom: 6px; font-size: 0.95rem; }
+        .info-card strong { color: white; display: block; margin-bottom: 6px; font-size: 1.05rem; }
 
-        /* 결과 화면 */
+        /* 예시 카드 (시작화면) */
+        .example-card {
+            width: 580px;
+            background: white; color: #1a1a2e;
+            border-radius: 14px; padding: 18px 28px;
+            text-align: center; font-size: 1.1rem; font-weight: 700;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            margin-bottom: 4px;
+        }
+        .example-card .ex-label { font-size: 0.88rem; color: #aaa; letter-spacing: 2px; margin-bottom: 8px; }
+        .example-card .ex-ask   { font-size: 0.95rem; color: #888; margin-top: 10px; }
+
+        /* 결과 */
         .result-rank {
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 1.3rem;
-            color: var(--blue);
-            background: rgba(0,194,255,0.1);
-            padding: 8px 28px;
-            border-radius: 50px;
-            border: 1px solid rgba(0,194,255,0.3);
+            font-family: 'Black Han Sans', sans-serif; font-size: 1.3rem;
+            color: var(--blue); background: rgba(0,194,255,0.1);
+            padding: 8px 28px; border-radius: 50px; border: 1px solid rgba(0,194,255,0.3);
         }
         .result-score {
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 4rem;
-            color: var(--gold);
-            text-shadow: 0 0 30px rgba(255,214,0,0.5);
+            font-family: 'Black Han Sans', sans-serif; font-size: 4rem;
+            color: var(--gold); text-shadow: 0 0 30px rgba(255,214,0,0.5);
         }
         .result-stats {
-            display: flex;
-            gap: 30px;
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px 30px;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.6);
+            display: flex; gap: 30px;
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: 14px; padding: 16px 30px;
+            font-size: 1rem; color: rgba(255,255,255,0.6);
         }
         .result-stats span { color: white; font-weight: 700; }
-
-        /* 이름 저장 */
-        .save-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
+        .save-row { display: flex; gap: 10px; align-items: center; }
         .name-input {
-            padding: 12px 20px;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            color: white;
-            font-size: 1rem;
-            font-family: 'Noto Sans KR', sans-serif;
-            text-align: center;
-            width: 150px;
-            outline: none;
+            padding: 12px 20px; background: rgba(255,255,255,0.1);
+            border: 2px solid var(--border); border-radius: 12px;
+            color: white; font-size: 1rem; text-align: center;
+            font-family: 'Noto Sans KR', sans-serif; width: 150px; outline: none;
             transition: border-color 0.2s;
         }
         .name-input:focus { border-color: var(--blue); }
         .name-input::placeholder { color: rgba(255,255,255,0.3); }
 
-        /* 버튼 공통 */
         .pill-btn {
-            padding: 12px 32px;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 1.05rem;
-            cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
+            padding: 12px 32px; border: none; border-radius: 50px;
+            font-family: 'Black Han Sans', sans-serif; font-size: 1.05rem;
+            cursor: pointer; transition: transform 0.1s, box-shadow 0.1s;
         }
         .pill-btn:hover { transform: translateY(-2px); }
         .pill-btn:active { transform: translateY(1px); }
-        .pill-btn-blue {
-            background: var(--blue);
-            color: #000;
-            box-shadow: 0 4px 20px rgba(0,194,255,0.5);
-        }
-        .pill-btn-gold {
-            background: var(--gold);
-            color: #000;
-            box-shadow: 0 4px 20px rgba(255,214,0,0.5);
-            font-size: 1.3rem;
-            padding: 16px 60px;
-            animation: pulse 1.8s infinite;
-        }
-        .pill-btn-green {
-            background: var(--green);
-            color: #000;
-            box-shadow: 0 4px 20px rgba(0,230,118,0.4);
-        }
+        .pill-btn-blue  { background: var(--blue);  color: #000; box-shadow: 0 4px 20px rgba(0,194,255,0.5); }
+        .pill-btn-gold  { background: var(--gold);  color: #000; box-shadow: 0 4px 20px rgba(255,214,0,0.5); font-size: 1.3rem; padding: 16px 60px; animation: pulse 1.8s infinite; }
+        .pill-btn-green { background: var(--green); color: #000; box-shadow: 0 4px 20px rgba(0,230,118,0.4); }
         @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(255,214,0,0.4); }
-            50% { transform: scale(1.04); box-shadow: 0 6px 30px rgba(255,214,0,0.7); }
+            0%, 100% { transform: scale(1);    box-shadow: 0 4px 20px rgba(255,214,0,0.4); }
+            50%       { transform: scale(1.04); box-shadow: 0 6px 30px rgba(255,214,0,0.7); }
         }
 
-        /* 랭킹 테이블 */
         .rank-container {
-            width: 480px;
-            max-height: 230px;
-            overflow-y: auto;
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 6px 0;
+            width: 480px; max-height: 230px; overflow-y: auto;
+            background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 6px 0;
         }
         .rank-container::-webkit-scrollbar { width: 4px; }
         .rank-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
         .rank-row {
-            display: grid;
-            grid-template-columns: 50px 1fr 100px 80px;
-            padding: 10px 20px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.9rem;
-            align-items: center;
-            gap: 8px;
+            display: grid; grid-template-columns: 50px 1fr 100px 80px;
+            padding: 10px 20px; border-bottom: 1px solid var(--border);
+            font-size: 1rem; align-items: center; gap: 8px;
         }
         .rank-row:last-child { border-bottom: none; }
         .rank-num { font-family: 'Black Han Sans', sans-serif; color: rgba(255,255,255,0.4); }
         .rank-num.top { color: var(--gold); }
         .rank-name { font-weight: 700; }
         .rank-score { color: var(--gold); font-weight: 700; text-align: right; }
-        .rank-date { font-size: 0.75rem; color: rgba(255,255,255,0.35); text-align: right; }
+        .rank-date { font-size: 0.9rem; color: rgba(255,255,255,0.35); text-align: right; }
         .rank-me { background: rgba(0,194,255,0.08); }
 
-        /* 로딩 스피너 */
-        .loading {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: rgba(255,255,255,0.4);
-            font-size: 0.85rem;
-        }
-        .spinner {
-            width: 16px; height: 16px;
-            border: 2px solid rgba(255,255,255,0.2);
-            border-top-color: var(--blue);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
+        .loading { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+        .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.2); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        #save-status { font-size: 0.95rem; color: rgba(255,255,255,0.4); height: 17px; }
 
-        /* 흔들기 */
         .shake { animation: shake 0.35s; }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-6px); }
-            60% { transform: translateX(6px); }
-        }
-
-        /* 반응형 (작은 화면 대비) */
-        @media (max-height: 700px) {
-            .char-avatar { width: 100px; height: 100px; font-size: 2.8rem; }
-            .q-text { font-size: 1.25rem; }
-            header { padding: 10px 30px; }
-            .game-area { padding: 16px 40px; gap: 14px; }
+            20%  { transform: translateX(-6px); }
+            60%  { transform: translateX(6px); }
         }
     </style>
 </head>
 <body>
 
-<!-- 시작 화면 -->
+<!-- ── 시작 화면 ── -->
 <div id="start-screen" class="overlay">
     <div class="overlay-title">⚡ 전산회계 마스터</div>
-    <div class="overlay-sub">전산회계 2급 · 차변 / 대변 판단 게임</div>
+    <div class="overlay-sub">전산회계 2급 · 계정과목 차변/대변 위치 판단 게임</div>
+
+    <!-- 예시 문제 미리보기 -->
+    <div class="example-card">
+        <div class="ex-label">📌 문제 예시</div>
+        <span>상품을 현금으로 구입하다 → </span>
+        <span class="target-account" style="font-size:1.1rem; padding:1px 10px 2px;">상품</span>
+        <span>은(는) 어느 쪽?</span>
+        <div class="ex-ask">↑ 굵은 보라색으로 강조된 계정과목이 차변인지 대변인지 클릭!</div>
+    </div>
 
     <div class="start-grid">
         <div class="info-card">
             <strong>🎮 게임 방법</strong>
-            거래 상황을 보고<br>
-            차변(←) 또는 대변(→) 버튼을 클릭!<br>
-            <span style="color:var(--blue)">← A키</span> / <span style="color:var(--red)">→ L키</span>로도 가능
+            거래 문장에서 <b style="color:#b388ff">보라색 강조</b>된<br>
+            계정과목이 차변인지 대변인지<br>
+            버튼을 클릭하세요!
         </div>
         <div class="info-card">
             <strong>⏱️ 규칙</strong>
@@ -529,24 +436,21 @@
             콤보 보너스로 고득점 도전!
         </div>
         <div class="info-card">
-            <strong>💎 점수 체계</strong>
-            기본 정답: <strong>100점</strong><br>
-            콤보 보너스: +10점/연속<br>
-            최고 콤보 기록도 저장!
+            <strong>💡 차변에 오는 계정</strong>
+            자산 <b style="color:var(--blue)">증가</b> · 부채 <b style="color:var(--red)">감소</b><br>
+            자본 <b style="color:var(--red)">감소</b> · 비용 <b style="color:var(--blue)">발생</b>
         </div>
         <div class="info-card">
-            <strong>🏆 계급 체계</strong>
-            🥉 신입 사원 (0~)<br>
-            🥈 회계 대리 (1,000~)<br>
-            🥇 회계 부장 (2,500~)<br>
-            👑 전설의 CFO (4,500~)
+            <strong>💡 대변에 오는 계정</strong>
+            자산 <b style="color:var(--red)">감소</b> · 부채 <b style="color:var(--blue)">증가</b><br>
+            자본 <b style="color:var(--blue)">증가</b> · 수익 <b style="color:var(--blue)">발생</b>
         </div>
     </div>
 
     <button class="pill-btn pill-btn-gold" onclick="startGame()">▶ 게임 시작</button>
 </div>
 
-<!-- 결과 화면 -->
+<!-- ── 결과 화면 ── -->
 <div id="result-screen" class="overlay" style="display:none">
     <div class="overlay-title">GAME OVER</div>
     <div id="result-rank" class="result-rank">최종 계급: 신입 사원</div>
@@ -556,52 +460,41 @@
         오답 <span id="stat-wrong">0</span>개 &nbsp;|&nbsp;
         최고 콤보 <span id="stat-combo">0</span>x
     </div>
-
     <div class="save-row">
         <input type="text" class="name-input" id="player-name" placeholder="이니셜 (예: KMJ)" maxlength="4">
         <button class="pill-btn pill-btn-blue" onclick="saveScore()" id="save-btn">💾 저장</button>
     </div>
-    <div id="save-status" style="font-size:0.8rem; color:rgba(255,255,255,0.4); height:18px;"></div>
-
-    <div style="font-family:'Black Han Sans',sans-serif; font-size:0.85rem; color:rgba(255,255,255,0.35); letter-spacing:2px; margin-top:4px;">🏆 TOP 랭킹</div>
+    <div id="save-status"></div>
+    <div style="font-family:'Black Han Sans',sans-serif; font-size:1rem; color:rgba(255,255,255,0.35); letter-spacing:2px;">🏆 TOP 랭킹</div>
     <div class="rank-container" id="rank-container">
-        <div class="loading" style="justify-content:center; padding:20px 0;">
+        <div class="loading" style="justify-content:center;padding:20px 0;">
             <div class="spinner"></div> 랭킹 불러오는 중...
         </div>
     </div>
-
     <button class="pill-btn pill-btn-green" onclick="startGame()" style="margin-top:6px;">↺ 다시 하기</button>
 </div>
 
-<!-- 헤더 -->
+<!-- ── 헤더 ── -->
 <header>
     <div class="logo">⚡ 전산회계 마스터</div>
     <div class="status-bar">
-        <div class="stat">
-            <div class="stat-label">TIME</div>
-            <div class="stat-value" id="timer-val">60</div>
-        </div>
-        <div class="timer-bar-wrap">
-            <div id="timer-bar"></div>
-        </div>
-        <div class="stat">
-            <div class="stat-label">SCORE</div>
-            <div class="stat-value" id="score-val">0</div>
-        </div>
-        <div class="stat">
-            <div class="stat-label">COMBO</div>
-            <div class="stat-value" id="combo-val">0x</div>
-        </div>
+        <div class="stat"><div class="stat-label">TIME</div><div class="stat-value" id="timer-val">60</div></div>
+        <div class="timer-bar-wrap"><div id="timer-bar"></div></div>
+        <div class="stat"><div class="stat-label">SCORE</div><div class="stat-value" id="score-val">0</div></div>
+        <div class="stat"><div class="stat-label">COMBO</div><div class="stat-value" id="combo-val">0x</div></div>
     </div>
-    <div style="font-size:0.8rem; color:rgba(255,255,255,0.3);">전산회계 2급</div>
+    <div style="font-size:1rem; color:rgba(255,255,255,0.3);">전산회계 2급</div>
 </header>
 
-<!-- 게임 영역 -->
+<!-- ── 게임 영역 ── -->
 <div class="game-area">
+
+    <!-- 왼쪽: 차변 -->
     <div class="character char-left">
-        <div class="char-avatar">🏦</div>
-        <div class="char-name">차 변</div>
-        <div class="char-hint">
+        <div class="char-avatar" id="avatar-left">🏦</div>
+        <div class="char-name">차 변 (借邊)</div>
+        <div class="char-rules">
+            <strong>차변에 기입하는 계정</strong>
             자산 증가 ↑<br>
             부채 감소 ↓<br>
             자본 감소 ↓<br>
@@ -609,21 +502,23 @@
         </div>
     </div>
 
+    <!-- 중앙: 문제 + 버튼 -->
     <div class="center-area">
         <div id="question-card" class="question-card">
-            <div class="q-num">QUESTION</div>
-            <div class="q-text" id="q-text">게임을 시작해보세요!</div>
+            <div class="q-label">강조된 계정과목은 어느 쪽?</div>
+            <div class="q-sentence" id="q-sentence">게임을 시작해보세요!</div>
+            <div class="q-ask" id="q-ask"></div>
             <div class="q-hint" id="q-hint"></div>
         </div>
 
         <div class="answer-buttons">
             <button class="ans-btn ans-btn-left" onclick="handleAnswer('left')">
-                👈 차변 (借變)
-                <span class="ans-sub">자산증가 / 비용발생 / 부채감소</span>
+                👈 차변 (借邊)
+                <span class="ans-sub">자산증가 / 비용발생 / 부채·자본감소</span>
             </button>
             <button class="ans-btn ans-btn-right" onclick="handleAnswer('right')">
-                대변 (貸變) 👉
-                <span class="ans-sub">부채증가 / 수익발생 / 자본증가</span>
+                대변 (貸邊) 👉
+                <span class="ans-sub">부채·자본증가 / 수익발생 / 자산감소</span>
             </button>
         </div>
 
@@ -633,10 +528,12 @@
         </div>
     </div>
 
+    <!-- 오른쪽: 대변 -->
     <div class="character char-right">
-        <div class="char-avatar">💰</div>
-        <div class="char-name">대 변</div>
-        <div class="char-hint">
+        <div class="char-avatar" id="avatar-right">💰</div>
+        <div class="char-name">대 변 (貸邊)</div>
+        <div class="char-rules">
+            <strong>대변에 기입하는 계정</strong>
             부채 증가 ↑<br>
             자본 증가 ↑<br>
             자산 감소 ↓<br>
@@ -645,97 +542,108 @@
     </div>
 </div>
 
-<!-- 팝업 효과 -->
-<div id="combo-popup" class="combo-popup">3 COMBO!</div>
-<div id="feedback-popup" class="feedback-popup">✓</div>
+<!-- 팝업 -->
+<div id="combo-popup" class="combo-popup"></div>
+<div id="feedback-popup" class="feedback-popup"></div>
 
 <script>
 // ═══════════════════════════════════════════════
 // ★ Google Sheets 설정
-// Apps Script 웹 앱 URL을 아래에 붙여넣으세요
 // ═══════════════════════════════════════════════
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbwu2w5MDXl4Ax2ww0rDKpvxO_Bi4lfhxyg3mF1c8zpg3w1iCuoJXS-rgj6GOfpcPYyf/exec";
-// 예: "https://script.google.com/macros/s/ABC.../exec"
+const SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
 
 // ═══════════════════════════════════════════════
-// ★ 전산회계 2급 문제 데이터 (60문항)
-// type: "left"=차변, "right"=대변
-// hint: 계정과목 힌트
+// ★ 문제 데이터
+//
+// sentence : 거래 문장 (HTML 가능)
+//            강조할 계정과목은 <b class="target-account">계정과목</b> 로 표시
+// target   : 강조된 계정과목 이름 (힌트용)
+// type     : "left"=차변, "right"=대변
+// hint     : 오답 시 표시할 이유
 // ═══════════════════════════════════════════════
 const questions = [
-    // ─ 자산 증가 (차변) ─
-    { text: "상품을 현금으로 구입하다", type: "left", hint: "상품(자산) 증가 → 차변" },
-    { text: "건물을 취득하고 현금으로 지급하다", type: "left", hint: "건물(자산) 증가 → 차변" },
-    { text: "외상매출금이 발생하다", type: "left", hint: "외상매출금(자산) 증가 → 차변" },
-    { text: "단기대여금을 지급하다", type: "left", hint: "단기대여금(자산) 증가 → 차변" },
-    { text: "비품(컴퓨터)을 구입하다", type: "left", hint: "비품(자산) 증가 → 차변" },
-    { text: "차량운반구를 구입하다", type: "left", hint: "차량운반구(자산) 증가 → 차변" },
-    { text: "현금을 수취하다", type: "left", hint: "현금(자산) 증가 → 차변" },
-    { text: "미수금이 발생하다", type: "left", hint: "미수금(자산) 증가 → 차변" },
-    { text: "선급금을 지급하다", type: "left", hint: "선급금(자산) 증가 → 차변" },
-    { text: "선급비용이 발생하다", type: "left", hint: "선급비용(자산) 증가 → 차변" },
-    { text: "받을어음이 발생하다", type: "left", hint: "받을어음(자산) 증가 → 차변" },
-    { text: "현금성자산이 증가하다", type: "left", hint: "현금성자산(자산) 증가 → 차변" },
-    { text: "보통예금 계좌에 입금되다", type: "left", hint: "보통예금(자산) 증가 → 차변" },
-    { text: "소모품을 현금으로 구입하다", type: "left", hint: "소모품(자산) 증가 → 차변" },
-    { text: "특허권을 취득하다", type: "left", hint: "특허권(무형자산) 증가 → 차변" },
 
-    // ─ 부채 감소 (차변) ─
-    { text: "외상매입금을 현금으로 상환하다", type: "left", hint: "외상매입금(부채) 감소 → 차변" },
-    { text: "단기차입금을 상환하다", type: "left", hint: "단기차입금(부채) 감소 → 차변" },
-    { text: "미지급금을 지급하다", type: "left", hint: "미지급금(부채) 감소 → 차변" },
-    { text: "선수금 거래를 이행하여 수익 인식", type: "left", hint: "선수금(부채) 감소 → 차변" },
-    { text: "장기차입금을 조기 상환하다", type: "left", hint: "장기차입금(부채) 감소 → 차변" },
-    { text: "지급어음을 결제하다", type: "left", hint: "지급어음(부채) 감소 → 차변" },
-    { text: "예수금을 납부하다", type: "left", hint: "예수금(부채) 감소 → 차변" },
+    // ── 자산 증가 → 차변 ──
+    { sentence: '상품을 현금으로 구입하다 → <b class="target-account">상품</b>', target: '상품', type: 'left', hint: '상품(자산) 증가 → 차변' },
+    { sentence: '건물을 현금으로 취득하다 → <b class="target-account">건물</b>', target: '건물', type: 'left', hint: '건물(자산) 증가 → 차변' },
+    { sentence: '상품을 외상으로 판매하다 → <b class="target-account">외상매출금</b>', target: '외상매출금', type: 'left', hint: '외상매출금(자산) 증가 → 차변' },
+    { sentence: '거래처에 단기대여금을 지급하다 → <b class="target-account">단기대여금</b>', target: '단기대여금', type: 'left', hint: '단기대여금(자산) 증가 → 차변' },
+    { sentence: '컴퓨터(비품)를 구입하다 → <b class="target-account">비품</b>', target: '비품', type: 'left', hint: '비품(자산) 증가 → 차변' },
+    { sentence: '업무용 차량을 구입하다 → <b class="target-account">차량운반구</b>', target: '차량운반구', type: 'left', hint: '차량운반구(자산) 증가 → 차변' },
+    { sentence: '매출 대금을 현금으로 받다 → <b class="target-account">현금</b>', target: '현금', type: 'left', hint: '현금(자산) 증가 → 차변' },
+    { sentence: '비품을 매각하고 대금이 미수 처리되다 → <b class="target-account">미수금</b>', target: '미수금', type: 'left', hint: '미수금(자산) 증가 → 차변' },
+    { sentence: '거래처에 계약금을 선지급하다 → <b class="target-account">선급금</b>', target: '선급금', type: 'left', hint: '선급금(자산) 증가 → 차변' },
+    { sentence: '보험료 중 차기분을 선급 처리하다 → <b class="target-account">선급비용</b>', target: '선급비용', type: 'left', hint: '선급비용(자산) 증가 → 차변' },
+    { sentence: '상품 판매 후 받을어음을 받다 → <b class="target-account">받을어음</b>', target: '받을어음', type: 'left', hint: '받을어음(자산) 증가 → 차변' },
+    { sentence: '급여를 보통예금 계좌로 받다 → <b class="target-account">보통예금</b>', target: '보통예금', type: 'left', hint: '보통예금(자산) 증가 → 차변' },
+    { sentence: '사무용 소모품을 현금으로 구입하다(자산 처리) → <b class="target-account">소모품</b>', target: '소모품', type: 'left', hint: '소모품(자산) 증가 → 차변' },
+    { sentence: '특허권을 취득하다 → <b class="target-account">특허권</b>', target: '특허권', type: 'left', hint: '특허권(무형자산) 증가 → 차변' },
+    { sentence: '단기매매 목적 주식을 취득하다 → <b class="target-account">단기매매증권</b>', target: '단기매매증권', type: 'left', hint: '단기매매증권(자산) 증가 → 차변' },
 
-    // ─ 비용 발생 (차변) ─
-    { text: "직원 급여를 지급하다", type: "left", hint: "급여(비용) 발생 → 차변" },
-    { text: "사무실 임차료를 지급하다", type: "left", hint: "임차료(비용) 발생 → 차변" },
-    { text: "거래처 접대비를 지출하다", type: "left", hint: "접대비(비용) 발생 → 차변" },
-    { text: "광고 선전비를 지출하다", type: "left", hint: "광고선전비(비용) 발생 → 차변" },
-    { text: "은행 이자비용이 발생하다", type: "left", hint: "이자비용(비용) 발생 → 차변" },
-    { text: "복리후생비를 지출하다", type: "left", hint: "복리후생비(비용) 발생 → 차변" },
-    { text: "통신비를 납부하다", type: "left", hint: "통신비(비용) 발생 → 차변" },
-    { text: "차량 수선비가 발생하다", type: "left", hint: "수선비(비용) 발생 → 차변" },
-    { text: "매출원가가 발생하다", type: "left", hint: "매출원가(비용) 발생 → 차변" },
-    { text: "감가상각비를 인식하다", type: "left", hint: "감가상각비(비용) 발생 → 차변" },
-    { text: "보험료를 납부하다", type: "left", hint: "보험료(비용) 발생 → 차변" },
-    { text: "세금과공과가 발생하다", type: "left", hint: "세금과공과(비용) 발생 → 차변" },
-    { text: "운반비(당사 부담)를 지급하다", type: "left", hint: "운반비(비용) 발생 → 차변" },
-    { text: "도서인쇄비를 지출하다", type: "left", hint: "도서인쇄비(비용) 발생 → 차변" },
+    // ── 부채 감소 → 차변 ──
+    { sentence: '외상매입금을 현금으로 갚다 → <b class="target-account">외상매입금</b>', target: '외상매입금', type: 'left', hint: '외상매입금(부채) 감소 → 차변' },
+    { sentence: '단기차입금을 은행에 상환하다 → <b class="target-account">단기차입금</b>', target: '단기차입금', type: 'left', hint: '단기차입금(부채) 감소 → 차변' },
+    { sentence: '비품 미지급 대금을 현금 지급하다 → <b class="target-account">미지급금</b>', target: '미지급금', type: 'left', hint: '미지급금(부채) 감소 → 차변' },
+    { sentence: '받은 계약금(선수금)으로 상품을 납품하다 → <b class="target-account">선수금</b>', target: '선수금', type: 'left', hint: '선수금(부채) 감소 → 차변 (의무 이행)' },
+    { sentence: '만기 도래한 지급어음을 결제하다 → <b class="target-account">지급어음</b>', target: '지급어음', type: 'left', hint: '지급어음(부채) 감소 → 차변' },
+    { sentence: '원천징수한 예수금을 세무서에 납부하다 → <b class="target-account">예수금</b>', target: '예수금', type: 'left', hint: '예수금(부채) 감소 → 차변' },
+    { sentence: '장기차입금을 조기 상환하다 → <b class="target-account">장기차입금</b>', target: '장기차입금', type: 'left', hint: '장기차입금(부채) 감소 → 차변' },
+    { sentence: '미지급비용(급여)을 지급하다 → <b class="target-account">미지급비용</b>', target: '미지급비용', type: 'left', hint: '미지급비용(부채) 감소 → 차변' },
 
-    // ─ 부채 증가 (대변) ─
-    { text: "상품을 외상으로 구입하다", type: "right", hint: "외상매입금(부채) 증가 → 대변" },
-    { text: "은행에서 단기로 차입하다", type: "right", hint: "단기차입금(부채) 증가 → 대변" },
-    { text: "비품 대금을 미지급 처리하다", type: "right", hint: "미지급금(부채) 증가 → 대변" },
-    { text: "선수금을 수령하다", type: "right", hint: "선수금(부채) 증가 → 대변" },
-    { text: "장기차입금을 조달하다", type: "right", hint: "장기차입금(부채) 증가 → 대변" },
-    { text: "지급어음을 발행하다", type: "right", hint: "지급어음(부채) 증가 → 대변" },
-    { text: "원천징수세액을 예수하다", type: "right", hint: "예수금(부채) 증가 → 대변" },
-    { text: "퇴직급여충당부채를 설정하다", type: "right", hint: "퇴직급여충당부채(부채) 증가 → 대변" },
+    // ── 비용 발생 → 차변 ──
+    { sentence: '직원 급여를 현금으로 지급하다 → <b class="target-account">급여</b>', target: '급여', type: 'left', hint: '급여(비용) 발생 → 차변' },
+    { sentence: '사무실 임차료를 지급하다 → <b class="target-account">임차료</b>', target: '임차료', type: 'left', hint: '임차료(비용) 발생 → 차변' },
+    { sentence: '거래처 접대비를 현금으로 지출하다 → <b class="target-account">접대비</b>', target: '접대비', type: 'left', hint: '접대비(비용) 발생 → 차변' },
+    { sentence: 'TV 광고 비용을 지급하다 → <b class="target-account">광고선전비</b>', target: '광고선전비', type: 'left', hint: '광고선전비(비용) 발생 → 차변' },
+    { sentence: '차입금에 대한 이자를 지급하다 → <b class="target-account">이자비용</b>', target: '이자비용', type: 'left', hint: '이자비용(비용) 발생 → 차변' },
+    { sentence: '직원 복리후생비를 지출하다 → <b class="target-account">복리후생비</b>', target: '복리후생비', type: 'left', hint: '복리후생비(비용) 발생 → 차변' },
+    { sentence: '회사 통신비를 납부하다 → <b class="target-account">통신비</b>', target: '통신비', type: 'left', hint: '통신비(비용) 발생 → 차변' },
+    { sentence: '건물 감가상각비를 계상하다 → <b class="target-account">감가상각비</b>', target: '감가상각비', type: 'left', hint: '감가상각비(비용) 발생 → 차변' },
+    { sentence: '화재보험료를 납부하다 → <b class="target-account">보험료</b>', target: '보험료', type: 'left', hint: '보험료(비용) 발생 → 차변' },
+    { sentence: '재산세를 납부하다 → <b class="target-account">세금과공과</b>', target: '세금과공과', type: 'left', hint: '세금과공과(비용) 발생 → 차변' },
+    { sentence: '출장 교통비를 지급하다 → <b class="target-account">여비교통비</b>', target: '여비교통비', type: 'left', hint: '여비교통비(비용) 발생 → 차변' },
+    { sentence: '외상매출금 중 회수 불능액을 처리하다 → <b class="target-account">대손상각비</b>', target: '대손상각비', type: 'left', hint: '대손상각비(비용) 발생 → 차변' },
+    { sentence: '상품 매출에 대응하는 원가를 인식하다 → <b class="target-account">매출원가</b>', target: '매출원가', type: 'left', hint: '매출원가(비용) 발생 → 차변' },
+    { sentence: '결산 시 소모품 사용분을 비용 처리하다 → <b class="target-account">소모품비</b>', target: '소모품비', type: 'left', hint: '소모품비(비용) 발생 → 차변' },
 
-    // ─ 자본 증가 (대변) ─
-    { text: "자본금을 현금으로 출자하다", type: "right", hint: "자본금(자본) 증가 → 대변" },
-    { text: "당기순이익이 발생하다", type: "right", hint: "이익잉여금(자본) 증가 → 대변" },
-    { text: "주식을 발행하여 납입받다", type: "right", hint: "자본금(자본) 증가 → 대변" },
+    // ── 부채 증가 → 대변 ──
+    { sentence: '상품을 외상으로 구입하다 → <b class="target-account">외상매입금</b>', target: '외상매입금', type: 'right', hint: '외상매입금(부채) 증가 → 대변' },
+    { sentence: '은행에서 단기로 자금을 빌리다 → <b class="target-account">단기차입금</b>', target: '단기차입금', type: 'right', hint: '단기차입금(부채) 증가 → 대변' },
+    { sentence: '비품을 구입하고 대금을 다음 달 지급하기로 하다 → <b class="target-account">미지급금</b>', target: '미지급금', type: 'right', hint: '미지급금(부채) 증가 → 대변' },
+    { sentence: '고객으로부터 상품 계약금을 미리 받다 → <b class="target-account">선수금</b>', target: '선수금', type: 'right', hint: '선수금(부채) 증가 → 대변' },
+    { sentence: '장기 시설자금을 은행에서 대출받다 → <b class="target-account">장기차입금</b>', target: '장기차입금', type: 'right', hint: '장기차입금(부채) 증가 → 대변' },
+    { sentence: '상품 대금으로 어음을 발행하다 → <b class="target-account">지급어음</b>', target: '지급어음', type: 'right', hint: '지급어음(부채) 증가 → 대변' },
+    { sentence: '직원 급여에서 소득세를 원천징수하다 → <b class="target-account">예수금</b>', target: '예수금', type: 'right', hint: '예수금(부채) 증가 → 대변' },
+    { sentence: '결산 시 퇴직급여충당부채를 설정하다 → <b class="target-account">퇴직급여충당부채</b>', target: '퇴직급여충당부채', type: 'right', hint: '퇴직급여충당부채(부채) 증가 → 대변' },
+    { sentence: '결산 시 법인세를 계상하다 → <b class="target-account">미지급법인세</b>', target: '미지급법인세', type: 'right', hint: '미지급법인세(부채) 증가 → 대변' },
+    { sentence: '이자수익 중 차기분을 이연 처리하다 → <b class="target-account">선수수익</b>', target: '선수수익', type: 'right', hint: '선수수익(부채) 증가 → 대변' },
+    { sentence: '기말 외상매입금 잔액에 대해 대손충당금 설정 → <b class="target-account">대손충당금</b>', target: '대손충당금', type: 'right', hint: '대손충당금(자산차감·부채성격) 증가 → 대변' },
+    { sentence: '결산 시 급여 미지급액을 계상하다 → <b class="target-account">미지급비용</b>', target: '미지급비용', type: 'right', hint: '미지급비용(부채) 증가 → 대변' },
 
-    // ─ 수익 발생 (대변) ─
-    { text: "상품을 현금으로 판매하다", type: "right", hint: "매출(수익) 발생 → 대변" },
-    { text: "상품을 외상으로 판매하다", type: "right", hint: "매출(수익) 발생 → 대변" },
-    { text: "은행 이자수익이 발생하다", type: "right", hint: "이자수익(수익) 발생 → 대변" },
-    { text: "임대료 수입이 발생하다", type: "right", hint: "임대료수익(수익) 발생 → 대변" },
-    { text: "유형자산 처분이익이 발생하다", type: "right", hint: "유형자산처분이익(수익) 발생 → 대변" },
-    { text: "배당금을 수취하다", type: "right", hint: "배당금수익(수익) 발생 → 대변" },
-    { text: "잡이익이 발생하다", type: "right", hint: "잡이익(수익) 발생 → 대변" },
+    // ── 자본 증가 → 대변 ──
+    { sentence: '창업자가 현금을 출자하다 → <b class="target-account">자본금</b>', target: '자본금', type: 'right', hint: '자본금(자본) 증가 → 대변' },
+    { sentence: '당기순이익이 확정되어 이익잉여금에 적립하다 → <b class="target-account">이익잉여금</b>', target: '이익잉여금', type: 'right', hint: '이익잉여금(자본) 증가 → 대변' },
+    { sentence: '유상증자로 주식을 발행하다 → <b class="target-account">자본금</b>', target: '자본금', type: 'right', hint: '자본금(자본) 증가 → 대변' },
 
-    // ─ 자산 감소 (대변) ─
-    { text: "보통예금에서 급여를 이체하다", type: "right", hint: "보통예금(자산) 감소 → 대변" },
-    { text: "현금으로 비품을 구입하다", type: "right", hint: "현금(자산) 감소 → 대변" },
-    { text: "외상매출금을 현금으로 회수하다", type: "right", hint: "외상매출금(자산) 감소 → 대변" },
-    { text: "단기대여금을 회수하다", type: "right", hint: "단기대여금(자산) 감소 → 대변" },
-    { text: "소모품을 사용하다", type: "right", hint: "소모품(자산) 감소 → 대변" },
-    { text: "받을어음이 만기 결제되다", type: "right", hint: "받을어음(자산) 감소 → 대변" },
+    // ── 수익 발생 → 대변 ──
+    { sentence: '상품을 현금으로 판매하다 → <b class="target-account">매출</b>', target: '매출', type: 'right', hint: '매출(수익) 발생 → 대변' },
+    { sentence: '상품을 외상으로 판매하다 → <b class="target-account">매출</b>', target: '매출', type: 'right', hint: '매출(수익) 발생 → 대변' },
+    { sentence: '은행 예금에 이자가 입금되다 → <b class="target-account">이자수익</b>', target: '이자수익', type: 'right', hint: '이자수익(수익) 발생 → 대변' },
+    { sentence: '건물을 타사에 임대하고 임대료를 받다 → <b class="target-account">임대료</b>', target: '임대료', type: 'right', hint: '임대료(수익) 발생 → 대변' },
+    { sentence: '업무용 차량을 처분하고 처분이익 발생 → <b class="target-account">유형자산처분이익</b>', target: '유형자산처분이익', type: 'right', hint: '유형자산처분이익(수익) 발생 → 대변' },
+    { sentence: '보유 주식에서 배당금을 받다 → <b class="target-account">배당금수익</b>', target: '배당금수익', type: 'right', hint: '배당금수익(수익) 발생 → 대변' },
+    { sentence: '원인 불명 현금 초과액을 잡이익 처리하다 → <b class="target-account">잡이익</b>', target: '잡이익', type: 'right', hint: '잡이익(수익) 발생 → 대변' },
+    { sentence: '단기대여금에 대한 이자 입금 → <b class="target-account">이자수익</b>', target: '이자수익', type: 'right', hint: '이자수익(수익) 발생 → 대변' },
+    { sentence: '결산 시 미수이자를 계상하다 → <b class="target-account">이자수익</b>', target: '이자수익', type: 'right', hint: '이자수익(수익) 대변 계상 (미수수익 차변과 쌍)' },
+
+    // ── 자산 감소 → 대변 ──
+    { sentence: '보통예금 계좌에서 급여를 이체하다 → <b class="target-account">보통예금</b>', target: '보통예금', type: 'right', hint: '보통예금(자산) 감소 → 대변' },
+    { sentence: '현금으로 상품을 구입하다 → <b class="target-account">현금</b>', target: '현금', type: 'right', hint: '현금(자산) 감소 → 대변' },
+    { sentence: '외상매출금을 현금으로 회수하다 → <b class="target-account">외상매출금</b>', target: '외상매출금', type: 'right', hint: '외상매출금(자산) 감소 → 대변' },
+    { sentence: '대여금이 만기 회수되다 → <b class="target-account">단기대여금</b>', target: '단기대여금', type: 'right', hint: '단기대여금(자산) 감소 → 대변' },
+    { sentence: '사무용 소모품을 사용하다(자산 처리된 것) → <b class="target-account">소모품</b>', target: '소모품', type: 'right', hint: '소모품(자산) 감소 → 대변' },
+    { sentence: '받을어음이 만기가 되어 당좌예금으로 입금 → <b class="target-account">받을어음</b>', target: '받을어음', type: 'right', hint: '받을어음(자산) 감소 → 대변' },
+    { sentence: '건물에 감가상각을 반영하다 → <b class="target-account">감가상각누계액</b>', target: '감가상각누계액', type: 'right', hint: '감가상각누계액(자산차감) 증가 → 대변' },
 ];
 
 // ═══════════════════════════════════════════════
@@ -750,23 +658,18 @@ let isPlaying = false;
 let correctCount = 0, wrongCount = 0;
 let lastInput = 0;
 
-// 오디오 컨텍스트
 let audioCtx;
 function getAudio() {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
     return audioCtx;
 }
-
 function playSound(type) {
     try {
         const ctx = getAudio();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
+        const osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
         const now = ctx.currentTime;
-
         if (type === 'correct') {
             osc.type = 'sine';
             osc.frequency.setValueAtTime(600 + combo * 40, now);
@@ -789,15 +692,12 @@ function playSound(type) {
 // 게임 흐름
 // ═══════════════════════════════════════════════
 function startGame() {
-    getAudio(); // iOS 오디오 권한
+    getAudio();
     document.getElementById('start-screen').style.display = 'none';
     document.getElementById('result-screen').style.display = 'none';
-
     score = 0; combo = 0; maxCombo = 0;
-    timeLeft = GAME_TIME;
-    correctCount = 0; wrongCount = 0;
+    timeLeft = GAME_TIME; correctCount = 0; wrongCount = 0;
     isPlaying = true;
-
     updateHUD();
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(tick, 1000);
@@ -821,25 +721,29 @@ function updateHUD() {
 
 function nextQuestion() {
     if (!isPlaying) return;
-    // 연속 같은 문제 방지
     let q;
     do { q = questions[Math.floor(Math.random() * questions.length)]; }
     while (q === currentQ);
     currentQ = q;
 
-    document.getElementById('q-text').textContent = q.text;
+    // 문장 렌더링 (HTML 포함)
+    document.getElementById('q-sentence').innerHTML = q.sentence;
+
+    // 하단 안내 문구
+    document.getElementById('q-ask').innerHTML =
+        `<b>${q.target}</b> 은(는) 차변? 대변?`;
+
     document.getElementById('q-hint').textContent = '';
     document.getElementById('question-card').className = 'question-card';
 }
 
-// 키보드 지원
-document.addEventListener('keydown', (e) => {
+// 키보드
+document.addEventListener('keydown', e => {
     if (!isPlaying) return;
-    if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowLeft') handleAnswer('left');
+    if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowLeft')  handleAnswer('left');
     if (e.key === 'l' || e.key === 'L' || e.key === 'ArrowRight') handleAnswer('right');
 });
 
-// 중복 클릭 방지
 function handleAnswer(side) {
     const now = Date.now();
     if (now - lastInput < 120) return;
@@ -852,40 +756,46 @@ function checkAnswer(side) {
     const card = document.getElementById('question-card');
 
     if (side === currentQ.type) {
-        // ✓ 정답
+        // ✅ 정답
         playSound('correct');
         combo++;
         if (combo > maxCombo) maxCombo = combo;
-        const bonus = Math.floor(combo * 10);
-        score += 100 + bonus;
+        score += 100 + Math.floor(combo * 10);
         correctCount++;
 
         card.classList.add('correct');
+
+        // 해당 방향 아바타 튀기기
+        const avatarId = side === 'left' ? 'avatar-left' : 'avatar-right';
+        const av = document.getElementById(avatarId);
+        av.classList.remove('pop-left', 'pop-right');
+        void av.offsetWidth; // reflow
+        av.classList.add(side === 'left' ? 'pop-left' : 'pop-right');
+
         showFeedback('ok', combo >= 3 ? `✓ ${combo} COMBO!` : '✓ 정답!');
         if (combo >= 2) showCombo(combo);
-
         updateHUD();
-        setTimeout(() => { card.classList.remove('correct'); nextQuestion(); }, 110);
+        setTimeout(() => { card.classList.remove('correct'); nextQuestion(); }, 130);
 
     } else {
-        // ✗ 오답
+        // ❌ 오답
         playSound('wrong');
         combo = 0;
         timeLeft = Math.max(0, timeLeft - 5);
         wrongCount++;
 
         card.classList.add('wrong');
-        document.getElementById('q-hint').textContent = currentQ.hint;
+        document.getElementById('q-hint').textContent = '💡 ' + currentQ.hint;
         document.body.classList.add('shake');
         showFeedback('no', '✗ 오답 (-5초)');
-
         updateHUD();
+
         setTimeout(() => {
             card.classList.remove('wrong');
             document.getElementById('q-hint').textContent = '';
             document.body.classList.remove('shake');
             nextQuestion();
-        }, 500);
+        }, 700);
     }
 }
 
@@ -894,7 +804,7 @@ function showFeedback(type, text) {
     el.className = 'feedback-popup ' + type;
     el.textContent = text;
     el.style.display = 'block';
-    setTimeout(() => { el.style.display = 'none'; }, 400);
+    setTimeout(() => el.style.display = 'none', 450);
 }
 
 function showCombo(n) {
@@ -902,15 +812,14 @@ function showCombo(n) {
     el.textContent = n + ' COMBO! 🔥';
     el.style.display = 'block';
     el.style.animation = 'none';
-    el.offsetHeight; // reflow
+    void el.offsetHeight;
     el.style.animation = 'comboPop 0.7s ease-out forwards';
-    setTimeout(() => { el.style.display = 'none'; }, 700);
+    setTimeout(() => el.style.display = 'none', 700);
 }
 
 function endGame() {
     isPlaying = false;
     clearInterval(timerInterval);
-
     document.getElementById('result-score').textContent = score.toLocaleString() + '점';
     document.getElementById('stat-correct').textContent = correctCount;
     document.getElementById('stat-wrong').textContent = wrongCount;
@@ -925,7 +834,6 @@ function endGame() {
     document.getElementById('player-name').value = '';
     document.getElementById('save-status').textContent = '';
     document.getElementById('save-btn').disabled = false;
-
     document.getElementById('result-screen').style.display = 'flex';
     loadRanking();
 }
@@ -947,20 +855,15 @@ async function saveScore() {
     const today = new Date().toLocaleDateString('ko-KR', {month:'2-digit', day:'2-digit'});
     const data = { name, score, maxCombo, date: today };
 
-    // Google Sheets 연동 여부 확인
     if (!SHEET_URL || SHEET_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
-        // 로컬 저장 폴백
         saveLocal(data);
         status.textContent = '✓ 로컬 저장 완료 (Google Sheets 미연결)';
         status.style.color = 'var(--gold)';
-        loadRanking();
-        return;
+        loadRanking(); return;
     }
-
     try {
         await fetch(SHEET_URL, {
-            method: 'POST',
-            mode: 'no-cors',
+            method: 'POST', mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
@@ -980,30 +883,21 @@ function saveLocal(data) {
     const list = getLocal();
     list.push(data);
     list.sort((a, b) => b.score - a.score);
-    localStorage.setItem('accGame_v2', JSON.stringify(list.slice(0, 20)));
+    localStorage.setItem('accGame_v3', JSON.stringify(list.slice(0, 20)));
 }
-function getLocal() {
-    return JSON.parse(localStorage.getItem('accGame_v2') || '[]');
-}
+function getLocal() { return JSON.parse(localStorage.getItem('accGame_v3') || '[]'); }
 
 async function loadRanking() {
     const container = document.getElementById('rank-container');
-
     if (!SHEET_URL || SHEET_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
-        renderRankList(getLocal());
-        return;
+        renderRankList(getLocal()); return;
     }
-
     container.innerHTML = '<div class="loading" style="justify-content:center;padding:20px 0;"><div class="spinner"></div> 불러오는 중...</div>';
-
     try {
         const res = await fetch(SHEET_URL + '?action=get');
         const data = await res.json();
-        const combined = mergeRankings(data, getLocal());
-        renderRankList(combined);
-    } catch(e) {
-        renderRankList(getLocal());
-    }
+        renderRankList(mergeRankings(data, getLocal()));
+    } catch(e) { renderRankList(getLocal()); }
 }
 
 function mergeRankings(remote, local) {
@@ -1018,14 +912,13 @@ function mergeRankings(remote, local) {
 function renderRankList(list) {
     const container = document.getElementById('rank-container');
     if (!list || list.length === 0) {
-        container.innerHTML = '<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:0.85rem;">아직 기록이 없습니다</div>';
+        container.innerHTML = '<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:1rem;">아직 기록이 없습니다</div>';
         return;
     }
-    const currentName = document.getElementById('player-name').value.trim().toUpperCase();
+    const me = document.getElementById('player-name').value.trim().toUpperCase();
     container.innerHTML = list.map((r, i) => {
-        const isMe = r.name === currentName;
         const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1) + '위';
-        return `<div class="rank-row ${isMe ? 'rank-me' : ''}">
+        return `<div class="rank-row ${r.name === me ? 'rank-me' : ''}">
             <div class="rank-num ${i < 3 ? 'top' : ''}">${medal}</div>
             <div class="rank-name">${r.name}</div>
             <div class="rank-score">${(r.score||0).toLocaleString()}점</div>
