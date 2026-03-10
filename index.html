@@ -381,10 +381,11 @@
         .rank-container::-webkit-scrollbar { width: 4px; }
         .rank-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
         .rank-row {
-            display: grid; grid-template-columns: 50px 1fr 100px 80px;
+            display: grid; grid-template-columns: 50px 1fr 120px 100px 80px;
             padding: 10px 20px; border-bottom: 1px solid var(--border);
             font-size: 1rem; align-items: center; gap: 8px;
         }
+        .rank-grade { font-size: 0.88rem; color: rgba(255,255,255,0.55); }
         .rank-row:last-child { border-bottom: none; }
         .rank-num { font-family: 'Black Han Sans', sans-serif; color: rgba(255,255,255,0.4); }
         .rank-num.top { color: var(--gold); }
@@ -918,13 +919,24 @@ function renderRankList(list) {
     const me = document.getElementById('player-name').value.trim().toUpperCase();
     container.innerHTML = list.map((r, i) => {
         const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1) + '위';
+        const grade = r.grade || getGrade(r.score);
         return `<div class="rank-row ${r.name === me ? 'rank-me' : ''}">
             <div class="rank-num ${i < 3 ? 'top' : ''}">${medal}</div>
             <div class="rank-name">${r.name}</div>
+            <div class="rank-grade">${grade}</div>
             <div class="rank-score">${(r.score||0).toLocaleString()}점</div>
             <div class="rank-date">${r.date || ''}</div>
         </div>`;
     }).join('');
+}
+
+// GAS에서 grade 필드가 없는 구 데이터도 대응
+function getGrade(score) {
+    if (score >= 4500) return '👑 전설의 CFO';
+    if (score >= 2500) return '🥇 회계 부장';
+    if (score >= 1000) return '🥈 회계 대리';
+    if (score >=  500) return '🥉 신입 사원';
+    return '📋 수습 직원';
 }
 </script>
 </body>
